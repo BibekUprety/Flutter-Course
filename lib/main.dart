@@ -1,101 +1,60 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(ScoreApp());
-}
-
-class ScoreApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Score App",
+void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ScoreHome(),
-    );
-  }
-}
+      title: 'Dice  App',
+      home: HomePage(),
+    ));
 
-class ScoreHome extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _ScoreHomeState createState() => _ScoreHomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _ScoreHomeState extends State<ScoreHome> {
-  int num = 0;
-  void resetNumber() {
-    setState(() {
-      num = 0;
-    });
-  }
-  void increaseNumber() {
-    setState(() {
-      num++;
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  int diceNumber = 1;
 
-  void decreaseNumber() {
+  void changeDice() {
     setState(() {
-      num--;
+      diceNumber = Random().nextInt(6) + 1;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Score App"),
+        backgroundColor: Colors.deepPurpleAccent,
         centerTitle: true,
+        title: Text('Dice Roller'),
       ),
       body: Column(
         children: [
           SizedBox(
-            height: 25,
+            height: 20,
           ),
           Center(
-            child: Text(
-              "Score is",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
+            child: Image.asset(
+              "assets/$diceNumber.png",
+              height: 250,
+              width: 250,
             ),
-
-          ), Center(
+          ),
+          MaterialButton(
+            onPressed: changeDice,
+            color: Colors.blue,
             child: Text(
-              num.toString(),
-              style: TextStyle(
-                  fontSize: 120,
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+              "Roll",
+              style: TextStyle(color: Colors.white),
             ),
-
           ),
           SizedBox(
-            height: 50,
+            height: 100,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              RaisedButton(
-                onPressed: increaseNumber,
-                color: Colors.blue,
-                child: Text('Increase', style: TextStyle(color: Colors.white),),
-              ),
-              RaisedButton(
-                onPressed: decreaseNumber,
-                color: Colors.red,
-                child: Text('Decrease', style: TextStyle(color: Colors.white),),
-              ),
-            ],
-          ),
+          Text("Flutter with bibek")
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: resetNumber,
-        child: Icon(Icons.reset_tv),
       ),
     );
   }
