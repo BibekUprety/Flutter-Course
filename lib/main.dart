@@ -1,31 +1,102 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Profile App',
-    home: Scaffold(
+  runApp(ScoreApp());
+}
+
+class ScoreApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Score App",
+      debugShowCheckedModeBanner: false,
+      home: ScoreHome(),
+    );
+  }
+}
+
+class ScoreHome extends StatefulWidget {
+  @override
+  _ScoreHomeState createState() => _ScoreHomeState();
+}
+
+class _ScoreHomeState extends State<ScoreHome> {
+  int num = 0;
+  void resetNumber() {
+    setState(() {
+      num = 0;
+    });
+  }
+  void increaseNumber() {
+    setState(() {
+      num++;
+    });
+  }
+
+  void decreaseNumber() {
+    setState(() {
+      num--;
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
+        title: Text("Score App"),
         centerTitle: true,
-        title: Text("Profile App"),
       ),
       body: Column(
         children: [
-          SizedBox(height: 20,),
-          Center(
-            child: Image.network("https://images.pexels.com/photos/358238/pexels-photo-358238.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",height: 300,width: 300,),
+          SizedBox(
+            height: 25,
           ),
-          SizedBox(height: 10,),
-          Text("Name : Bibek Upreti",style:TextStyle( fontWeight: FontWeight.bold,fontSize: 24,color: Colors.black)),
-          SizedBox(height: 5,),
-          Text("Address : Kathmandu",style:TextStyle( fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black)),
-          Text("Email :bibekUpreti9813@gmail.com",style:TextStyle( fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black)),
-          SizedBox(height: 150,),
-          Text("Developed By : Bibek Uprety",style:TextStyle( fontSize: 15,color: Colors.black)),
+          Center(
+            child: Text(
+              "Score is",
+              style: TextStyle(
+                  fontSize: 20,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
+            ),
 
+          ), Center(
+            child: Text(
+              num.toString(),
+              style: TextStyle(
+                  fontSize: 120,
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
 
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              RaisedButton(
+                onPressed: increaseNumber,
+                color: Colors.blue,
+                child: Text('Increase', style: TextStyle(color: Colors.white),),
+              ),
+              RaisedButton(
+                onPressed: decreaseNumber,
+                color: Colors.red,
+                child: Text('Decrease', style: TextStyle(color: Colors.white),),
+              ),
+            ],
+          ),
         ],
       ),
-    ),
-  ));
+      floatingActionButton: FloatingActionButton(
+        onPressed: resetNumber,
+        child: Icon(Icons.reset_tv),
+      ),
+    );
+  }
 }
