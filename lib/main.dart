@@ -1,61 +1,97 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(
+void main() =>
+    runApp(MaterialApp(
+      title: "TODO App",
       debugShowCheckedModeBanner: false,
-      title: 'Dice  App',
-      home: HomePage(),
+      home: TODOAPP(),
     ));
 
-class HomePage extends StatefulWidget {
+class TODOAPP extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _TODOAPPState createState() => _TODOAPPState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int diceNumber = 1;
+class _TODOAPPState extends State<TODOAPP> {
+  String value;
+  var listTODO = [''];
 
-  void changeDice() {
+  addTODO(String item) {
     setState(() {
-      diceNumber = Random().nextInt(6) + 1;
+      listTODO.add(item);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        centerTitle: true,
-        title: Text('Dice Roller'),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Image.asset(
-              "assets/$diceNumber.png",
-              height: 250,
-              width: 250,
-            ),
-          ),
-          MaterialButton(
-            onPressed: changeDice,
-            color: Colors.blue,
-            child: Text(
-              "Roll",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          Text("Flutter with bibek")
-        ],
-      ),
+        appBar: AppBar(
+          title: Text('TODO APP'),
+          centerTitle: true,
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            addTODO(value);
+          },
+          child: Icon(Icons.add),
+        ),
+        body: ListView.builder(
+            itemCount: listTODO.length,
+            itemBuilder: (context, index) {
+              return index==0? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "add item"
+                  ),
+                  onChanged: (val){
+                   value=val;
+                  },
+                ),
+              ):ListTile(
+                leading: Icon(Icons.work),
+                title: Text('${listTODO[index]}',style: TextStyle(fontWeight: FontWeight.bold),),
+              );
+            })
+
     );
+
+    /* ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextFormField(),
+          ),
+
+          ListTile(
+            title: Text("Get Up"),
+            leading: Icon(Icons.info),
+          ),
+          ListTile(
+            title: Text("Code"),
+            leading: Icon(Icons.info),
+          ),
+          ListTile(
+            title: Text("Sleep"),
+            leading: Icon(Icons.info),
+          ),
+        ],
+      ),*/
+    /* ListView.builder(
+                itemCount: listTODO.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(Icons.work),
+                    title: Text('${listTODO[index]}',style: TextStyle(fontWeight: FontWeight.bold),),
+                  );
+                })*/
+    /* SingleChildScrollView(
+        child: Column(
+          children: [
+            TextFormField(),
+          ],
+        ),
+      )*/
+
   }
 }
